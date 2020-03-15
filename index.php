@@ -37,6 +37,12 @@ if ($err) {
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
+    <meta property="og:title" content="Website Pantau Corona Oleh Kominfo Kabupaten Kampar" />
+    <meta property="og:description" content="Website Data Update Persebaran Virus Corona atau Covid 19 di Indonesia Oleh Kominfo Kabupaten Kampar" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://pantaucorona.kamparkab.go.id/" />
+    <meta property="og:image" content="img/logo.png" />
+
     <!-- CSS  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
