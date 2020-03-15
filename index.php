@@ -1,28 +1,3 @@
-<?php
-$curl = curl_init();
-
-curl_setopt_array($curl, array(
-    CURLOPT_URL => "https://covid19.mathdro.id/api/countries/ID",
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => "",
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 30,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => "GET",
-    CURLOPT_POSTFIELDS => "",
-));
-
-$response = curl_exec($curl);
-$err = curl_error($curl);
-
-curl_close($curl);
-
-if ($err) {
-    echo "cURL Error #:" . $err;
-} else {
-    $data = json_decode($response, true);
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,30 +24,30 @@ if ($err) {
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
 </head>
 
-<body onload="JavaScript:AutoRefresh(1000*60*30);">
+<body>
     <main>
         <div class="section no-pad-bot" id="index-banner">
             <div class="container">
                 <br />
                 <div class="center"><img src="img/logo.png" alt="" width="90" /></div>
-                <h3 class="header center orange-text">#INDONESIASIAGA</h3>
+                <h4 class="header center orange-text">#INDONESIASIAGA</h4>
                 <div class="row center">
                     <h5 class="header col s12 light">
                         Data Persebaran COVID-19 di Indonesia oleh Kominfo Kabupaten Kampar
                     </h5>
                     <br /><br /><br />
-                    <h6>Update Terakhir tanggal : <?= date('d M Y', strtotime($data['lastUpdate'])) ?></h6>
+                    <h6 id="lastUpdate"></h6>
                 </div>
             </div>
         </div>
 
         <div class="container">
-            <div class="row">
+            <div class="row" id="datareal">
                 <div class="col s4 m4 center">
                     <div class="card green light-1">
                         <div class="card-content white-text laporan">
                             <i class="large material-icons">face</i>
-                            <p id="kasus"> <?= $data['confirmed']['value']; ?></p>
+                            <p id="confirmed"></p>
                             <p>Kasus Tercatat</p>
                         </div>
                     </div>
@@ -81,7 +56,7 @@ if ($err) {
                     <div class="card green light-1">
                         <div class="card-content white-text laporan">
                             <i class="large material-icons">mood_bad</i>
-                            <p id="kasus"> <?= $data['deaths']['value']; ?></p>
+                            <p id="deaths"></p>
                             <p>Kasus Meninggal</p>
                         </div>
                     </div>
@@ -90,8 +65,30 @@ if ($err) {
                     <div class="card green light-1">
                         <div class="card-content white-text laporan">
                             <i class="large material-icons">mood</i>
-                            <p id="kasus"> <?= $data['recovered']['value']; ?></p>
+                            <p id="recovered"></p>
                             <p>Kasus Sembuh</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="card  orange darken-3">
+                        <div class="card-content white-text laporan">
+                            <p style="font-size: 1.5rem">Cara pencegahan</p>
+                            <p>Beberapa tips untuk menghindari virus corona.</p>
+                            <hr>
+                            <ol>
+                                <li> Mencuci tangan dengan benar</li>
+                                <li> Menggunakan masker</li>
+                                <li> Menjaga daya tahan tubuh</li>
+                                <li> Tidak pergi ke negara terjangkit</li>
+                                <li> Minum vitamin C</li>
+                                <li>Hindari menyentuh mata, hidung, dan mulut dengan tangan yang tidak dicuci</li>
+                                <li> Konsumsi gizi seimbang, perbanyak sayur dan buah</li>
+                                <li> Rajin olahraga dan istirahat cukup</li>
+                                <li>Jangan mengonsumsi daging yang tidak masak</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
@@ -124,9 +121,33 @@ if ($err) {
 </body>
 
 <script type="text/JavaScript">
-    function AutoRefresh( t ) {
-               setTimeout("location.reload(true);", t);
-            }
+    $(document).ready(function () {
+       datacovid();
+       setInterval("datacovid();",(1000*60)*30); 
+    });
+
+function datacovid(){
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://covid19.mathdro.id/api/countries/ID",
+        "method": "GET",
+}
+
+$.ajax(settings).done(function (response) {
+    const months = ["JAN", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    var LastUpdate = Date.parse(response['lastUpdate']);
+    var tgl = new Date(LastUpdate);
+    var tglHasil = tgl.getDate()+ '-'+ months[tgl.getMonth()]+'-'+tgl.getFullYear();
+    $('#confirmed').html(response['confirmed']['value']);
+    $('#deaths').html(response['deaths']['value']);
+    $('#recovered').html(response['recovered']['value']);
+    $('#lastUpdate').html('Update Terakhir tanggal : '+tglHasil);
+    console.log('chek Data Baru setiap 30 Menit '+ new Date());
+    
+});
+}
+
 </script>
 
 </html>
