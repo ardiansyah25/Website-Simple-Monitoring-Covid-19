@@ -44,60 +44,54 @@ if ($err) {
 </head>
 
 <body onload="JavaScript:AutoRefresh(1000*60*30);">
-    <div class="section no-pad-bot" id="index-banner">
-        <div class="container">
-            <br />
-            <div class="center"><img src="img/logo.png" alt="" width="90" /></div>
-            <h3 class="header center orange-text">#INDONESIASIAGA</h3>
-            <div class="row center">
-                <h5 class="header col s12 light">
-                    Data Persebaran COVID-19 di Indonesia oleh Kominfo Kabupaten Kampar
-                </h5>
-                <br /><br /><br />
-                <h6>Update Terakhir tanggal : <?= date('d F Y', strtotime($data['lastUpdate'])) ?></h6>
+    <main>
+        <div class="section no-pad-bot" id="index-banner">
+            <div class="container">
+                <br />
+                <div class="center"><img src="img/logo.png" alt="" width="90" /></div>
+                <h3 class="header center orange-text">#INDONESIASIAGA</h3>
+                <div class="row center">
+                    <h5 class="header col s12 light">
+                        Data Persebaran COVID-19 di Indonesia oleh Kominfo Kabupaten Kampar
+                    </h5>
+                    <br /><br /><br />
+                    <h6>Update Terakhir tanggal : <?= date('d M Y', strtotime($data['lastUpdate'])) ?></h6>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="container">
-        <div class="section">
+        <div class="container">
             <div class="row">
-                <div class="col s12 m4">
-                    <div class="card-panel green light-1">
-                        <div class="icon-block">
-                            <h1 class="center white-text">
-                                <i class="material-icons">face</i><br />
-                                <?= $data['confirmed']['value']; ?>
-                            </h1>
-                            <h5 class="center white-text">Kasus Terkonfirmasi</h5>
+                <div class="col s4 m4 center">
+                    <div class="card green light-1">
+                        <div class="card-content white-text laporan">
+                            <i class="large material-icons">face</i>
+                            <p id="kasus"> <?= $data['confirmed']['value']; ?></p>
+                            <p>Kasus Tercatat</p>
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m4">
-                    <div class="card-panel green light-1">
-                        <div class="icon-block">
-                            <h1 class="center white-text">
-                                <i class="material-icons">mood_bad</i><br />
-                                <?= $data['deaths']['value']; ?>
-                            </h1>
-                            <h5 class="center white-text">Kasus Meninggal</h5>
+                <div class="col s4 m4 center">
+                    <div class="card green light-1">
+                        <div class="card-content white-text laporan">
+                            <i class="large material-icons">mood_bad</i>
+                            <p id="kasus"> <?= $data['deaths']['value']; ?></p>
+                            <p>Kasus Meninggal</p>
                         </div>
                     </div>
                 </div>
-                <div class="col s12 m4">
-                    <div class="card-panel green light-1">
-                        <div class="icon-block">
-                            <h1 class="center white-text">
-                                <i class="material-icons">mood</i><br />
-                                <?= $data['recovered']['value']; ?>
-                            </h1>
-                            <h5 class="center white-text">Kasus Sembuh</h5>
+                <div class="col s4 m4 center">
+                    <div class="card green light-1">
+                        <div class="card-content white-text laporan">
+                            <i class="large material-icons">mood</i>
+                            <p id="kasus"> <?= $data['recovered']['value']; ?></p>
+                            <p>Kasus Sembuh</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
     <footer class="page-footer orange">
         <div class="container">
             <div class="row">
@@ -124,11 +118,9 @@ if ($err) {
 </body>
 
 <script type="text/JavaScript">
-    <!--
-            function AutoRefresh( t ) {
+    function AutoRefresh( t ) {
                setTimeout("location.reload(true);", t);
             }
-         //-->
 </script>
 
 </html>
